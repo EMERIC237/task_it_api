@@ -7,18 +7,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-
-  # ressources
-  resources :users do
-    resources :tasks
-    resources :reviews
-  end
   
-  resources :tasks do
-    resources :time_entries
-  end
-
-  resources :daily_plans do
-    resources :daily_plan_tasks
-  end
 end

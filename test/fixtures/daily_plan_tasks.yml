@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  plan: one
+  task: one
+  time_slot_start: 2024-02-13 22:00:29
+  time_slot_end: 2024-02-13 22:00:29
+  created_at: 2024-02-13 22:00:29
+  updated_at: 2024-02-13 22:00:29
+
+two:
+  plan: two
+  task: two
+  time_slot_start: 2024-02-13 22:00:29
+  time_slot_end: 2024-02-13 22:00:29
+  created_at: 2024-02-13 22:00:29
+  updated_at: 2024-02-13 22:00:29
