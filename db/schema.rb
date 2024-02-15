@@ -10,16 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_14_040029) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_15_050845) do
   create_table "daily_plan_tasks", force: :cascade do |t|
-    t.integer "plan_id", null: false
+    t.integer "daily_plan_id", null: false
     t.integer "task_id", null: false
     t.datetime "time_slot_start"
     t.datetime "time_slot_end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["plan_id"], name: "index_daily_plan_tasks_on_plan_id"
+    t.index ["daily_plan_id"], name: "index_daily_plan_tasks_on_daily_plan_id"
     t.index ["task_id"], name: "index_daily_plan_tasks_on_task_id"
+  end
+
+  create_table "daily_plans", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_daily_plans_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -60,11 +68,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_14_040029) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "daily_plan_tasks", "plans"
+  add_foreign_key "daily_plan_tasks", "daily_plans"
   add_foreign_key "daily_plan_tasks", "tasks"
+  add_foreign_key "daily_plans", "users"
   add_foreign_key "reviews", "users"
   add_foreign_key "tasks", "users"
   add_foreign_key "time_entries", "tasks"
