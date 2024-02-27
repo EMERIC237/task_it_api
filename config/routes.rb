@@ -5,16 +5,18 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :users, shallow: true do
-    resources :tasks, only: [:index, :create]
-    resources :reviews, only: [:index]
+    resources :tasks, only: [:index, :create] do
+      resources :reviews, only: [:create, :index]
+    end
     resources :daily_plans, only: [:index, :create]
   end
 
   resources :tasks, except: [:index, :create] do
     resources :time_entries, only: [:create]
+    resources :reviews, except: [:create, :index]
   end
 
   resources :time_entries, only: [:show, :update, :destroy]
-  resources :reviews, except: [:index]
+  resources :reviews, except: [:index, :create]
   resources :daily_plan_tasks, only: [:create, :destroy, :index]
 end

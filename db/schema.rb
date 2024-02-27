@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_15_050845) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_27_183044) do
   create_table "daily_plan_tasks", force: :cascade do |t|
     t.integer "daily_plan_id", null: false
     t.integer "task_id", null: false
@@ -31,12 +31,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_15_050845) do
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.datetime "date"
     t.text "summary"
     t.text "action_items"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "task_id"
+    t.index ["task_id"], name: "index_reviews_on_task_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
@@ -76,6 +78,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_15_050845) do
   add_foreign_key "daily_plan_tasks", "daily_plans"
   add_foreign_key "daily_plan_tasks", "tasks"
   add_foreign_key "daily_plans", "users"
+  add_foreign_key "reviews", "tasks"
   add_foreign_key "reviews", "users"
   add_foreign_key "tasks", "users"
   add_foreign_key "time_entries", "tasks"

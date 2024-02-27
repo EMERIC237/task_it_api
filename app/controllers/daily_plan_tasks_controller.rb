@@ -1,8 +1,9 @@
 class DailyPlanTasksController < ApplicationController
+  before_action :set_daily_plan_task, only: [:destroy]
+
   def index
-    daily_plan = DailyPlan.find(params[:daily_plan_id])
-    tasks = daily_plan.tasks
-    render json: tasks
+    daily_plan_tasks = DailyPlanTask.all
+    render json: daily_plan_tasks
   end
 
   def create
@@ -14,20 +15,16 @@ class DailyPlanTasksController < ApplicationController
     end
   end
 
-
-
   def destroy
     @daily_plan_task.destroy
     render json: { message: "Task removed from daily plan successfully" }, status: :ok
   end
 
-
-  
   private
 
   def set_daily_plan_task
     @daily_plan_task = DailyPlanTask.find(params[:id])
-    debugger
+
   end
 
   def daily_plan_task_params

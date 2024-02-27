@@ -1,9 +1,10 @@
 class ReviewsController < ApplicationController
+  # before_action :set_user, only: [:index, :create]
+  before_action :set_task, only: [:create, :index]
   before_action :set_review, only: [:show, :update, :destroy]
-  before_action :set_user, only: [:create, :index]
 
   def index
-    reviews = @user.reviews
+    reviews = @task.reviews
     render json: reviews
   end
 
@@ -12,27 +13,28 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    review = @user.reviews.build(review_params)
+    review = @task.reviews.build(review_params)
+
     if review.save
       render json: review, status: :created
     else
-      render json: { error: "Could not create review" }, status: :unprocessable_entity
+      render json: { errors: review.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
+  # PATCH/PUT /reviews/:id
   def update
     if @review.update(review_params)
       render json: @review
     else
-      render json: { error: "Review could not be updated" }, status: :unprocessable_entity
+      render json: { errors: @review.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
+  # DELETE /reviews/:id
   def destroy
     @review.destroy
-    render json: { message: "Review deleted successfully" }, status: :ok
-  rescue StandardError => e
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: { message: "Review successfully deleted" }, status: :ok
   end
 
   private
@@ -47,5 +49,11 @@ class ReviewsController < ApplicationController
 
   def set_user
     @user = User.find(params[:user_id])
+  end
+
+  def set_task
+    @task = Task.find(params[:task_id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Task not found" }, status: :not_found
   end
 end
