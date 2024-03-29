@@ -1,12 +1,12 @@
 databases:
-    - name: task-it
-      databaseName: task-it
-      user: task-it
+    - name: betablogclassname
+      databaseName: betablogclassname
+      user: betablogclassname
       plan: free
 
 services:
     - type: web
-      name: task-it
+      name: betablogclassname
       runtime: ruby
       plan: free
       buildCommand: './bin/render-build.sh'
@@ -15,7 +15,7 @@ services:
       envVars:
           - key: DATABASE_URL
             fromDatabase:
-                name: task-it
+                name: betablogclassname
                 property: connectionString
           - key: RAILS_MASTER_KEY
             sync: false
