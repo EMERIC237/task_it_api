@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+  get 'sessions/create'
   get "/tasks/all", to: "tasks#index_all", as: :all_tasks
   get "/reviews/all", to: "reviews#index_all", as: :all_reviews
   get "/daily_plans/all", to: "daily_plans#index_all", as: :all_daily_plans
   get "up" => "rails/health#show", as: :rails_health_check
+  post "/login", to: "sessions#create"
 
+  
   resources :users, shallow: true do
     resources :tasks, only: [:index, :create] do
       resources :reviews, only: [:create, :index]
