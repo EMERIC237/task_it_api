@@ -1,8 +1,8 @@
 class TasksController < ApplicationController
   # before_action :set_daily_plan, only: [:add_to_plan, :remove_from_plan]
+  before_action :authenticate_request, except: [:index_all]
   before_action :set_task, only: [:show, :update, :destroy]
   before_action :set_user, only: [:create, :index]
-
 
   def index_all
     tasks = Task.all
